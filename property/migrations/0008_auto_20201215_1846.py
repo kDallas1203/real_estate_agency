@@ -9,8 +9,9 @@ def fill_owner_pure_phone(apps, schema_editor):
     for flat in Flats.objects.all():
         phone_number = flat.owners_phonenumber
         normalized_phone = phonenumbers.parse(phone_number, 'RU')
-        flat.owner_pure_phone = normalized_phone
-        flat.save()
+        if phonenumbers.is_valid_number(normalized_phone):
+            flat.owner_pure_phone = normalized_phone
+            flat.save()
 
 
 class Migration(migrations.Migration):
