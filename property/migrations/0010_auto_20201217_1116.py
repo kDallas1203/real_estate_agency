@@ -8,9 +8,9 @@ def fill_owners_from_flat(apps, schema_editor):
     Owner = apps.get_model('property', 'Owner')
 
     for flat in Flat.objects.all():
-        owner = Owner.objects.get_or_create(full_name=flat.owner, pure_phone=flat.owner_pure_phone, phonenumber=flat.owners_phonenumber)
-        owner[0].flats.add(flat)
-        owner[0].save()
+        owner, _ = Owner.objects.get_or_create(full_name=flat.owner, pure_phone=flat.owner_pure_phone, phonenumber=flat.owners_phonenumber)
+        owner.flats.add(flat)
+        owner.save()
 
 
 class Migration(migrations.Migration):
